@@ -12,8 +12,7 @@
 
 
 void *threadfunc(void *parm);
-
-
-
+void *maleThread(void* param);
+void *femaleThread(void* param);
 
 #endif

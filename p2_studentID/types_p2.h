@@ -55,7 +55,7 @@ class Restroom {
 	int queue_male;
 	int queue_female;
 	int queue_total;
-	int queue_male;
+	int used_male;
 	int used_female;
 	int used_total;
 
@@ -71,6 +71,9 @@ public:
 		queue_male = 0;
 		queue_female = 0;
 		queue_total = 0;
+		used_male = 0;
+		used_female = 0;
+		used_total = 0;
 
 	}
 
