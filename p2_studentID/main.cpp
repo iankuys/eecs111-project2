@@ -10,21 +10,23 @@
 #include "p2_threads.h"
 #include "utils.h"
 
-pthread_cond_t  cond  = PTHREAD_COND_INITIALIZER;
+pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
 pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 struct timeval t_global_start;
 
-int main(int argc, char** argv)
+Restroom restroom;
+
+int main(int argc, char **argv)
 {
 	// This is to set the global start time
 	gettimeofday(&t_global_start, NULL);
 
+	pthread_t tid = 0;
+	int status = 0;
+	int work = 0;
 
-	pthread_t       tid = 0;
-	int             status = 0;
-	int             work = 0;
-
-	if((argc != 2) || (atoi(argv[1]) <= 0)){
+	if ((argc != 2) || (atoi(argv[1]) <= 0))
+	{
 		printf("[ERROR] Expecting 1 integer argument with value greater than 0, but got none.\n");
 		printf("[USAGE] ./p2_exec <number>\n");
 		exit(1);
@@ -38,12 +40,15 @@ int main(int argc, char** argv)
 	pthread_t people[n_people];
 	srand(time(0));
 
-	for (int i = 0; i < n_people; i++){
+	for (int i = 0; i < n_people; i++)
+	{
 		int gender = rand() % 2;
-		if (((gender == 0) && (n_male != 0 ) || (n_female == 0))){
+		if (((gender == 0) && (n_male != 0) || (n_female == 0)))
+		{
 			gettimeofday(&t_curr, NULL);
 			printf("[%lu ms][Input] A person (Man) goes into the queue.\n", get_elasped_time(t_global_start, t_curr));
-			if(pthread_create(&people[i], NULL, maleThread, NULL)){
+			if (pthread_create(&people[i], NULL, maleThread, NULL))
+			{
 				fprintf(stderr, "Error creating thread");
 			}
 			n_male--;
@@ -52,7 +57,8 @@ int main(int argc, char** argv)
 		{
 			gettimeofday(&t_curr, NULL);
 			printf("[%lu ms][Input] A person (Woman) goes into the queue.\n", get_elasped_time(t_global_start, t_curr));
-			if(pthread_create(&people[i], NULL, femaleThread, NULL)){
+			if (pthread_create(&people[i], NULL, femaleThread, NULL))
+			{
 				fprintf(stderr, "Error creating thread");
 			}
 			n_female--;
@@ -61,14 +67,13 @@ int main(int argc, char** argv)
 		usleep(MSEC(interval));
 	}
 
-	for(int j = 0; j < n_people; j++){
-		if(pthread_join(people[j], NULL)){
+	for (int j = 0; j < n_people; j++)
+	{
+		if (pthread_join(people[j], NULL))
+		{
 			fprintf(stderr, "Error joining thread");
 		}
 	}
 
 	return 0;
-
-
 }
-

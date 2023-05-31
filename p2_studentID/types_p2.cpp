@@ -85,13 +85,13 @@ void Restroom::man_wants_to_enter(Person& p){
 	queue_total =  queue_male + queue_female;
 	printf("[%lu ms][Queue] Send (Man) into the restroom (Stays %d ms), Status: ", get_elasped_time(t_global_start, t_curr), t_interval);
 	printf("Total: %d (Men: %d, Women: %d)\n", queue_total, queue_male, queue_female);
-	queue_male++;
-	used_total = queue_male + used_female;
+	used_male++;
+	used_total = used_male + used_female;
 	status = MENPRESENT;
 	gettimeofday(&t_curr, NULL);
 	printf("[%lu ms][Restroom] (Man) goes into the restroom, State is ", get_elasped_time(t_global_start, t_curr));
 	print_status();
-	printf(": Total: %d (Men: %d, Women: %d)\n", used_total, queue_male, used_female);
+	printf(": Total: %d (Men: %d, Women: %d)\n", used_total, used_male, used_female);
 	p.start();
 
 }
@@ -107,12 +107,12 @@ void Restroom::woman_wants_to_enter(Person& p){
 	printf("[%lu ms][Queue] Send (Man) into the restroom (Stays %d ms), Status: ", get_elasped_time(t_global_start, t_curr), t_interval);
 	printf("Total: %d (Men: %d, Women: %d)\n", queue_total, queue_male, queue_female);
 	used_female++;
-	used_total = queue_male + used_female;
+	used_total = used_male + used_female;
 	status = WOMENPRESENT;
 	gettimeofday(&t_curr, NULL);
 	printf("[%lu ms][Restroom] (Man) goes into the restroom, State is ", get_elasped_time(t_global_start, t_curr));
 	print_status();
-	printf(": Total: %d (Men: %d, Women: %d)\n", used_total, queue_male, used_female);
+	printf(": Total: %d (Men: %d, Women: %d)\n", used_total, used_male, used_female);
 	p.start();
 
 }
@@ -122,8 +122,8 @@ void Restroom::man_leaves(Person& p){
 	int oldStatus = status;
 	string outputString;
 
-	queue_male--;
-	used_total = queue_male + used_female;
+	used_male--;
+	used_total = used_male + used_female;
 
 	if (used_total == 0){
 		status = EMPTY;
@@ -142,7 +142,7 @@ void Restroom::man_leaves(Person& p){
 		printf("Status is changed, status is ");
 	}
     print_status();
-	printf(" : Total: %d (Men: %d, Women: %d)\n", used_total, queue_male, used_female);
+	printf(" : Total: %d (Men: %d, Women: %d)\n", used_total, used_male, used_female);
 }
 
 void Restroom::woman_leaves(Person& p){
@@ -151,7 +151,7 @@ void Restroom::woman_leaves(Person& p){
 	string outputString;
 
 	used_female--;
-	used_total = queue_male + used_female;
+	used_total = used_male + used_female;
 
 	if (used_total == 0){
 		status = EMPTY;
@@ -162,7 +162,7 @@ void Restroom::woman_leaves(Person& p){
 	p.complete();
 	
 	gettimeofday(&t_curr, NULL);
-	printf("[%lu ms][Restroom] (Man) left the restroom. ", get_elasped_time(t_global_start, t_curr));
+	printf("[%lu ms][Restroom] (Womam) left the restroom. ", get_elasped_time(t_global_start, t_curr));
 	if(status == oldStatus){
 		printf("State is ");
 	}
@@ -170,7 +170,7 @@ void Restroom::woman_leaves(Person& p){
 		printf("Status is changed, status is ");
 	}
     print_status();
-	printf(" : Total: %d (Men: %d, Women: %d)\n", used_total, queue_male, used_female);
+	printf(" : Total: %d (Men: %d, Women: %d)\n", used_total, used_male, used_female);
 }
 
 bool Restroom::cleared_to_enter(Person& p){

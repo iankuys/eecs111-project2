@@ -9,10 +9,9 @@
 #include <vector>
 #include <unistd.h>
 
-#define EMPTY        0
+#define EMPTY 0
 #define WOMENPRESENT 1
-#define MENPRESENT   2
-
+#define MENPRESENT 2
 
 class Person
 {
@@ -23,7 +22,6 @@ class Person
 	struct timeval t_start;
 	struct timeval t_end;
 	long time_to_stay_ms;
-
 
 	unsigned long order;
 	unsigned long use_order;
@@ -47,10 +45,10 @@ public:
 	void complete(void);
 };
 
-
 // Class for the restroom
 // You may need to add more class member variables and functions
-class Restroom {
+class Restroom
+{
 	int status;
 	int queue_male;
 	int queue_female;
@@ -59,14 +57,13 @@ class Restroom {
 	int used_female;
 	int used_total;
 
-
 	// You need to define the data structure to
-    // save the information of people using the restroom
+	// save the information of people using the restroom
 	// You can probebly use Standard Template Library (STL) vector
 
-
 public:
-	Restroom(){
+	Restroom()
+	{
 		status = EMPTY;
 		queue_male = 0;
 		queue_female = 0;
@@ -74,32 +71,21 @@ public:
 		used_male = 0;
 		used_female = 0;
 		used_total = 0;
-
 	}
 
 	// You need to use this function to print the Restroom's status
 	void print_status(void);
 
-
 	// Call by reference
 	// This is just an example. You can implement any function you need
-	void add_person(Person& p);
+	void add_person(Person &p);
 
-	void man_wants_to_enter(Person& p);
-	void woman_wants_to_enter(Person& p);
-	void man_leaves(Person& p);
-	void woman_leaves(Person& p);
+	void man_wants_to_enter(Person &p);
+	void woman_wants_to_enter(Person &p);
+	void man_leaves(Person &p);
+	void woman_leaves(Person &p);
 
-	bool cleared_to_enter(Person& p);
+	bool cleared_to_enter(Person &p);
 };
-
-
-
-
-
-
-
-
-
 
 #endif
